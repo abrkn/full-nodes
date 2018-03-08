@@ -1,11 +1,13 @@
+[Unit]
 After=docker.service
 Requires=docker.service
 
 [Service]
-WorkingDirectory=/opt/full-nodes
-TimeoutStartSec=0
 Restart=always
-ExecStart=//bin/bash /opt/full-nodes/run-node.sh bitcoin-core
+ExecStartPre=-/usr/bin/docker stop bitcoin-core
+ExecStartPre=-/usr/bin/docker rm bitcoin-core
+ExecStart=/usr/bin/docker run -t --name bitcoin-core -v /opt/full-nodes/bitcoin-core/data:/data -p 8000:8332 bitcoin-core
+User=ubuntu
 
 [Install]
 WantedBy=multi-user.target

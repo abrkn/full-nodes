@@ -1,11 +1,13 @@
+[Unit]
 After=docker.service
 Requires=docker.service
 
 [Service]
-WorkingDirectory=/opt/full-nodes
-TimeoutStartSec=0
 Restart=always
-ExecStart=//bin/bash /opt/full-nodes/run-node.sh bitcoin-cash
+ExecStartPre=-/usr/bin/docker stop bitcoin-cash
+ExecStartPre=-/usr/bin/docker rm bitcoin-cash
+ExecStart=/usr/bin/docker run -t --name bitcoin-cash -v /opt/full-nodes/bitcoin-cash/data:/data -p 8001:8332 bitcoin-cash
+User=ubuntu
 
 [Install]
 WantedBy=multi-user.target

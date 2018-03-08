@@ -1,11 +1,13 @@
+[Unit]
 After=docker.service
 Requires=docker.service
 
 [Service]
-WorkingDirectory=/opt/full-nodes
-TimeoutStartSec=0
 Restart=always
-ExecStart=//bin/bash /opt/full-nodes/run-node.sh monero
+ExecStartPre=-/usr/bin/docker stop monero
+ExecStartPre=-/usr/bin/docker rm monero
+ExecStart=/usr/bin/docker run -t --name monero -v /opt/full-nodes/monero/data:/data -p 8003:18081 monero
+User=ubuntu
 
 [Install]
 WantedBy=multi-user.target
