@@ -1,0 +1,12 @@
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/opt/full-nodes
+TimeoutStartSec=0
+Restart=always
+ExecStart=//bin/bash /opt/full-nodes/run-node.sh bitcoin-core
+
+[Install]
+WantedBy=multi-user.target
+
