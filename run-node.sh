@@ -6,4 +6,3 @@ docker run -i \
 	--name $1 \
 	-v /opt/full-nodes/$1/data:/data \
 	$1
-

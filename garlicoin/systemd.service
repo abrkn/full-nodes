@@ -1,0 +1,13 @@
+[Unit]
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker stop garlicoin
+ExecStartPre=-/usr/bin/docker rm garlicoin
+ExecStart=/usr/bin/docker run -t --name garlicoin -v /opt/full-nodes/garlicoin/data:/data -p 8006:42068 garlicoin
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target
