@@ -1,0 +1,16 @@
+[Unit]
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker stop ethereum-parity
+ExecStartPre=-/usr/bin/docker rm ethereum-parity
+ExecStartPre=-/usr/bin/docker pull parity/parity
+ExecStart=/usr/bin/docker run -t --name ethereum-parity -v /opt/full-nodes/ethereum-parity/data:/root/.local/share/io.parity.ethereum/ -p 8004:8545 parity/parity --pruning archive --tracing on --jsonrpc-interface all --snapshot-peers=10 --cache-size 4096 --db-compaction ssd --mode active --fat-db on -lestimate_gas=trace,own_tx=trace
+
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target
+
