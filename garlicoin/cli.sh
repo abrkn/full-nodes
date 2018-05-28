@@ -6,4 +6,4 @@ docker run -ti \
 	--name garlicoin-cli \
 	--link garlicoin:garlicoin \
 	garlicoin \
-	bitcoin-cli -rpcuser=user -rpcconnect=garlicoin ${@:1}
+	garlicoin-cli -rpcuser=user -rpcconnect=garlicoin ${@:1}
